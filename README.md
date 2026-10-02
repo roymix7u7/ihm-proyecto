@@ -1,16 +1,74 @@
-# React + Vite
+# Ceniza · Alta Cocina de Origen
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Este es el proyecto de IHM: la web de reservas del restaurante **Ceniza**, programada a partir de nuestro prototipo en Figma.
 
-Currently, two official plugins are available:
+Está hecha con React, Vite y Tailwind, pero no necesitas saber nada de eso para verla. Solo sigue estos pasos 👇
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## Antes de empezar (solo la primera vez)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Necesitas tener instaladas dos cosas en tu computadora:
 
-## Expanding the Oxlint configuration
+- **Node.js**, versión 22 o más nueva → descárgalo de [nodejs.org](https://nodejs.org) (elige la versión que dice **LTS**).
+- **Git** → descárgalo de [git-scm.com](https://git-scm.com).
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+¿No sabes si ya los tienes? Abre una terminal y escribe `node -v` y `git -v`. Si te sale un número de versión, ya está.
+
+## Descargar el proyecto (solo la primera vez)
+
+Abre una terminal en la carpeta donde quieras guardarlo y copia esto:
+
+```bash
+git clone https://github.com/roymix7u7/ihm-proyecto.git
+cd ihm-proyecto
+npm install
+```
+
+El último comando descarga todo lo que el proyecto necesita. Tarda uno o dos minutos, ten paciencia ☕
+
+## Ver la página
+
+Cada vez que quieras abrirla:
+
+```bash
+npm run dev
+```
+
+Luego entra a **http://localhost:5173** en tu navegador y listo 🎉
+
+Mientras la terminal siga abierta, cualquier cambio que hagas en el código se verá al instante en la página. Para apagarla, presiona `Ctrl + C` en la terminal.
+
+> 💡 Para ver cómo se ve en celular: presiona `F12` en el navegador y luego `Ctrl + Shift + M`.
+
+## Antes de ponerte a trabajar
+
+Trae siempre lo último que subieron los demás, así evitamos pisarnos el trabajo:
+
+```bash
+git pull
+npm install
+```
+
+## Subir tus cambios
+
+Cuando termines algo:
+
+```bash
+git add .
+git commit -m "Qué hiciste, en pocas palabras"
+git push
+```
+
+Para poder subir cambios, Roy tiene que agregarte primero como colaborador del repositorio. Pídeselo si aún no lo hizo.
+
+> 🤝 Para no chocar entre nosotros, avisemos en el grupo qué pantalla está haciendo cada uno.
+
+---
+
+## ¿Algo no funciona?
+
+- **"npm no se reconoce como comando"** → Falta instalar Node.js, o necesitas cerrar y volver a abrir la terminal después de instalarlo.
+- **Sale un error que menciona la versión de Node** → Tienes una versión antigua. Instala la última LTS desde [nodejs.org](https://nodejs.org).
+- **La página sale en blanco o con errores raros después de un `git pull`** → Corre `npm install` otra vez.
+- **Nada de lo anterior** → Escribe en el grupo y lo vemos juntos 🙌
