@@ -41,6 +41,15 @@ Mientras la terminal siga abierta, cualquier cambio que hagas en el código se v
 
 > 💡 Para ver cómo se ve en celular: presiona `F12` en el navegador y luego `Ctrl + Shift + M`.
 
+## Probar la página (datos de demostración)
+
+Todo funciona sin base de datos: lo que hagas se guarda en tu navegador.
+
+- **Cuenta para entrar:** `carlos.menalv@gmail.com` · contraseña `Ceniza2026` (o crea la tuya en "Crear cuenta").
+- **Pago aprobado:** usa la tarjeta `4111 1111 1111 1111`, cualquier fecha futura y cualquier CVV.
+- **Pago rechazado:** usa la tarjeta `4000 0000 0000 0002`, o el código `000000` en Yape/Plin.
+- **Empezar de cero:** abre las herramientas del navegador (`F12`) → pestaña *Application* → *Local storage* → borra todo y recarga.
+
 ## Antes de ponerte a trabajar
 
 Trae siempre lo último que subieron los demás, así evitamos pisarnos el trabajo:

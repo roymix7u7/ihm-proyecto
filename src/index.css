@@ -13,6 +13,12 @@
   --color-oro: #c5a059;     /* acento: sobretítulos, botón principal */
   --color-linea: #ebe6de;   /* bordes y divisores */
   --color-icono: #1d1b20;   /* íconos Material (M3 on-surface) */
+  --color-arena: #f3efe8;   /* botones del contador de personas */
+  --color-error: #a8382a;   /* pago rechazado y errores de validación */
+  --color-error-suave: #fdf8f7;
+  --color-exito: #4e7c59;   /* "Pago verificado" */
+  --color-exito-suave: #f1f6f2;
+  --color-salir: #ff8082;   /* botón "Salir de la reserva" */
 }
 
 @layer base {

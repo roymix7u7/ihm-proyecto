@@ -5,7 +5,7 @@ import AmbienteCard from '../components/ambientes/AmbienteCard.jsx'
 import Button from '../components/ui/Button.jsx'
 import Eyebrow from '../components/ui/Eyebrow.jsx'
 import { ambientes } from '../data/ambientes.js'
-import { platos, platosDestacadosIds } from '../data/platos.js'
+import { destacadosHome } from '../data/platos.js'
 
 const pilares = [
   'Ingredientes nativos recolectados a mano',
@@ -17,8 +17,6 @@ const contenedor = 'px-5 md:px-10 lg:px-20'
 const divisor = 'mx-5 border-linea md:mx-10 lg:mx-20'
 
 export default function Home() {
-  const destacados = platos.filter((plato) => platosDestacadosIds.includes(plato.id))
-
   return (
     <>
       <section className={`relative flex min-h-[560px] flex-col justify-end gap-8 py-16 lg:h-[680px] lg:p-20 ${contenedor}`}>
@@ -99,7 +97,7 @@ export default function Home() {
           <h2 className="font-serif text-4xl text-carbon lg:text-5xl">Destacados de Nuestra Carta</h2>
         </div>
         <ul className="grid gap-x-16 gap-y-10 md:grid-cols-2">
-          {destacados.map((plato) => (
+          {destacadosHome.map((plato) => (
             <li key={plato.id} className="flex flex-col gap-2">
               <h3 className="font-serif text-2xl text-carbon">{plato.nombre}</h3>
               <p className="text-sm leading-normal text-grafito">{plato.descripcion}</p>
