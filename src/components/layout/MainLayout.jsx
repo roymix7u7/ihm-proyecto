@@ -3,7 +3,7 @@ import { Outlet, useLocation } from 'react-router'
 import Footer from './Footer.jsx'
 import Navbar from './Navbar.jsx'
 
-export default function MainLayout() {
+export default function MainLayout({ footerCompacto = false }) {
   const { pathname } = useLocation()
 
   // Al cambiar de pantalla, volver arriba como en una navegación normal.
@@ -17,7 +17,7 @@ export default function MainLayout() {
       <main className="flex-1">
         <Outlet />
       </main>
-      <Footer />
+      <Footer compacto={footerCompacto} />
     </div>
   )
 }

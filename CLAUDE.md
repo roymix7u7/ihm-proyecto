@@ -4,34 +4,40 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Proyecto
 
-Sitio web de reservas del restaurante ficticio **"Ceniza – Alta Cocina de Origen"** (curso IHM). Se implementa pantalla por pantalla a partir de un prototipo de Figma. Todo el contenido, nombres de archivos, componentes y variables está en **español**.
+Sitio web de reservas del restaurante ficticio **"Ceniza – Alta Cocina de Origen"** (curso IHM), programado a partir de un prototipo de Figma. Todo el contenido, nombres de archivos, componentes y variables está en **español**. Todas las pantallas del prototipo están implementadas y funcionan con datos simulados (sin backend).
 
-- Figma: file key `hlzcPumT85vQXcHSGytQad`, página `0:1` "IHM ACTUALIZADO". Cada pantalla es un frame de 1440 px (p. ej. `141:2` homepage, `145:2487` ambientes-listing, `141:717`…`141:1791` checkout de 7 pasos, `152:508` login, `159:102` registro). Las pantallas "avisos" son estados de error de validación de la misma pantalla, no rutas aparte.
-- El diseño solo trae escritorio; la versión responsive (móvil/tablet) es decisión propia y se debe mantener sin scroll horizontal a 390 px.
+- Figma: file key `hlzcPumT85vQXcHSGytQad`, página `0:1` "IHM ACTUALIZADO". Cada pantalla es un frame de 1440 px (`141:2` home, `145:2487` ambientes, `141:258` detalle, `141:355` menú, `141:717`…`141:1791` checkout, `145:2742` mi reserva, `152:508` login, `159:102` registro, `152:575` perfil, `152:640` editar perfil). Las pantallas "avisos" son estados de error de validación, no rutas aparte.
+- Login, Registro, Perfil y Editar perfil se construyeron solo con la estructura y medidas de los metadatos de Figma (se agotó el límite de llamadas del plan Starter), así que sus textos son propios. Si se recupera acceso, comparar contra esos frames.
+- El orden real del checkout es **Personas → Fecha y Hora → Ambiente → Datos → Resumen → Pago → Confirmación** (el stepper del frame del paso 1 en Figma tiene el orden invertido por error).
+- El diseño solo trae escritorio; la versión responsive es decisión propia y debe mantenerse sin scroll horizontal a 390 px.
 
 ## Comandos
 
 ```bash
 npm run dev       # servidor de desarrollo (Vite)
 npm run build     # build de producción en dist/
-npm run preview   # servir el build
 npm run lint      # oxlint
 ```
 
-No hay tests configurados.
+No hay tests automatizados.
 
-## Stack y arquitectura
+## Stack
 
-- **React 19 + Vite 8, JavaScript (sin TypeScript)**, **Tailwind CSS v4** vía `@tailwindcss/vite` (no hay `tailwind.config.js`), **React Router v7** en modo declarativo (`BrowserRouter` en `main.jsx`, `<Routes>` en `App.jsx`).
-- **Tokens de diseño** en el bloque `@theme` de `src/index.css`: colores `crema`, `carbon`, `grafito`, `oro`, `linea`, `icono`; fuentes `font-serif` (Instrument Serif, títulos) y `font-sans` (Geist, todo lo demás). Las fuentes vienen de paquetes `@fontsource`, no de Google Fonts. Usar estos tokens en vez de hex sueltos.
-- **Layout**: `MainLayout` (Navbar + `<Outlet>` + Footer) envuelve todas las rutas. Las rutas sin pantalla implementada apuntan a `pages/Proximamente.jsx`.
-- **Componentes UI**: `components/ui/Button.jsx` (variantes `oro`, `oscuro`, `contorno-claro`, `contorno-oscuro`; con `to` renderiza `<Link>`; el padding se pasa por `className` porque varía por botón) y `Eyebrow.jsx` (sobretítulo dorado en mayúsculas).
-  - Button incluye `inline-flex` en sus clases base: para ocultarlo responsivamente usar `max-sm:hidden`/`max-lg:hidden`, no `hidden sm:inline-flex` (el `inline-flex` base gana a `hidden`).
-- **Datos**: no hay backend. `src/data/*.js` contiene datos de prueba con la **misma forma que las tablas del modelo de BD** del equipo (`ambientes`, `platos`, y más adelante `categorias_menu`, `temporadas_menu`, `horarios_atencion`, `disponibilidades`, `reservas`, `pagos`, `metodos_pago`, `comprobantes`, `usuarios`, `parametros`). Mantener los nombres de campo en snake_case del modelo para facilitar conectar una API después. Campos extra que el modelo no tiene (p. ej. `ambientes.categoria`, `ambientes.resumen`) están comentados como tales.
-- **Imágenes** exportadas de Figma en `src/assets/<pantalla>/`, íconos SVG en `src/assets/icons/`.
+React 19 + Vite 8 en **JavaScript**, **Tailwind CSS v4** vía `@tailwindcss/vite` (sin `tailwind.config.js`), **React Router v7** declarativo, `lucide-react` para íconos (los mismos que usa Figma) y `tailwind-merge`.
 
-## Flujo para implementar una pantalla de Figma
+- **Tokens** en el `@theme` de `src/index.css` (`crema`, `carbon`, `grafito`, `oro`, `linea`, `arena`, `error`, `exito`, `salir`…; `font-serif` = Instrument Serif, `font-sans` = Geist vía `@fontsource`). Usarlos en vez de hex sueltos.
+- `Button` y `Modal` combinan clases con `twMerge`, así que el `className` del llamador reemplaza a las clases base cuando chocan (tamaño de texto, `max-w`, `display`, etc.).
 
-1. `get_design_context` del frame (Figma MCP) para obtener estructura, textos exactos y assets; descargar los assets a `src/assets/` (las URLs de Figma expiran en 7 días).
-2. Traducir el código generado (posiciones absolutas) a flex/grid responsive reutilizando Navbar/Footer/Button/Eyebrow y los tokens.
-3. Verificar comparando capturas del build (escritorio 1440 px y móvil 390 px) contra el screenshot de Figma.
+## Arquitectura
+
+- **Datos simulados** (`src/services/api.js`): única capa de acceso a datos. Guarda en `localStorage` (clave `ceniza-bd-v1`) las tablas del modelo de BD del equipo (`usuarios`, `reservas`, `pagos`, `comprobantes`) con sus nombres de campo en snake_case, y responde con retrasos artificiales. Para conectar un backend real se reemplazan sus funciones manteniendo las firmas. Los catálogos estáticos (`ambientes`, `platos`, `parametros`, `horarios_atencion`, `metodos_pago`) están en `src/data/`; los campos que el modelo no tiene están comentados.
+- **Disponibilidad**: `estadoFecha`, `horariosDisponibles` y `disponibilidadAmbientes` combinan los horarios de atención, una ocupación pseudoaleatoria **determinista** (hash de fecha+hora+ambiente, para que sea coherente entre pantallas) y las reservas confirmadas guardadas. Lunes cerrado; se reserva desde mañana hasta +60 días.
+- **Contextos** (`src/context/`, hooks en `src/hooks/`): `AuthProvider` (sesión en `localStorage`) y `ReservaProvider` (borrador del checkout en `sessionStorage` + temporizador de 10 min calculado desde `borrador.inicio`).
+- **Checkout**: cada paso es una página en `pages/checkout/` envuelta en `RequiereSesion` + `PasoProtegido` (redirige al primer paso con datos faltantes y arranca el temporizador). `CheckoutLayout` arma stepper + contenido + panel `ResumenMesa` + `Temporizador`, y muestra el modal de tiempo agotado. El borrador se limpia en `Confirmacion.jsx` al montar, **no** en `PasoPago`: la navegación de React Router es una transición y limpiar antes hace que `PasoProtegido` redirija al paso 2.
+- **Pago simulado**: la tarjeta `4000 0000 0000 0002` o el código `000000` en Yape/Plin se rechazan; cualquier otra tarjeta que pase Luhn se aprueba (p. ej. `4111 1111 1111 1111`).
+- **Formularios**: `useFormulario(inicial, reglas)` valida al salir de cada campo y al enviar; las reglas y máscaras están en `utils/validaciones.js`. Componentes `Campo`, `EntradaContrasena`, `AvisoValidacion`, `Casilla`.
+- **Layouts**: `MainLayout` (footer completo) y `MainLayout footerCompacto` para login, registro y perfil.
+
+## Datos de demostración
+
+Cuenta `carlos.menalv@gmail.com` / `Ceniza2026`, con una reserva sembrada (`CEN-2026-0831`). Para volver a los datos iniciales, borrar las claves `ceniza-*` de `localStorage` o llamar a `reiniciarDatosDemo()`.

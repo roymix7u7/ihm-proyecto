@@ -7,7 +7,7 @@ export default function AmbienteCard({ ambiente }) {
     <article className="group flex flex-col gap-6">
       <Link to={`/ambientes/${ambiente.slug}`} className="block overflow-hidden">
         <img
-          src={ambiente.imagen_web}
+          src={ambiente.imagen_portada}
           alt={`Ambiente ${ambiente.nombre}`}
           loading="lazy"
           className="h-80 w-full object-cover transition-transform duration-500 group-hover:scale-105 lg:h-[400px]"

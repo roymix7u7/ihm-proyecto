@@ -1,6 +1,7 @@
 import { useState } from 'react'
-import { Link, NavLink } from 'react-router'
+import { Link, NavLink, useLocation } from 'react-router'
 import iconoCuenta from '../../assets/icons/account-circle.svg'
+import useAuth from '../../hooks/useAuth.js'
 import Button from '../ui/Button.jsx'
 
 const enlaces = [
@@ -22,6 +23,9 @@ function claseEnlace({ isActive }) {
 export default function Navbar() {
   const [menuAbierto, setMenuAbierto] = useState(false)
   const cerrarMenu = () => setMenuAbierto(false)
+  const { usuario } = useAuth()
+  const { pathname } = useLocation()
+  const enReserva = pathname.startsWith('/reservar')
 
   return (
     <header className="sticky top-0 z-50 border-b border-linea bg-crema">
@@ -44,14 +48,22 @@ export default function Navbar() {
         </nav>
 
         <div className="flex items-center gap-4 lg:gap-[30px]">
-          <Button
-            to="/reservar"
-            variante="oscuro"
-            className="rounded px-5 py-2.5 text-[11px] font-semibold max-sm:hidden"
+          {!enReserva && (
+            <Button
+              to="/reservar"
+              variante="oscuro"
+              className="rounded px-5 py-2.5 text-[11px] font-semibold max-sm:hidden"
+            >
+              Reservar mesa privada
+            </Button>
+          )}
+          <Link
+            to={usuario ? '/perfil' : '/login'}
+            aria-label={usuario ? `Mi cuenta (${usuario.nombre_completo})` : 'Iniciar sesión'}
+            title={usuario ? 'Mi cuenta' : 'Iniciar sesión'}
+            className="flex shrink-0 items-center gap-2 rounded-full text-sm text-carbon hover:opacity-80"
           >
-            Reservar mesa privada
-          </Button>
-          <Link to="/login" aria-label="Mi cuenta" className="shrink-0">
+            {usuario && <span className="hidden font-semibold xl:inline">{usuario.nombre_completo.split(' ')[0]}</span>}
             <img src={iconoCuenta} alt="" width="40" height="40" className="size-10" />
           </Link>
           <button
@@ -87,14 +99,16 @@ export default function Navbar() {
               </li>
             ))}
           </ul>
-          <Button
-            to="/reservar"
-            variante="oscuro"
-            onClick={cerrarMenu}
-            className="mt-6 w-full rounded px-5 py-3 text-[11px] font-semibold sm:hidden"
-          >
-            Reservar mesa privada
-          </Button>
+          {!enReserva && (
+            <Button
+              to="/reservar"
+              variante="oscuro"
+              onClick={cerrarMenu}
+              className="mt-6 w-full rounded px-5 py-3 text-[11px] font-semibold sm:hidden"
+            >
+              Reservar mesa privada
+            </Button>
+          )}
         </nav>
       )}
     </header>

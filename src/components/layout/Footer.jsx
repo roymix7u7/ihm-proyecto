@@ -26,7 +26,29 @@ const columnas = [
   },
 ]
 
-export default function Footer() {
+function FooterCompacto() {
+  return (
+    <footer className="flex flex-col gap-6 bg-carbon px-5 pt-9 pb-7 text-crema md:px-10 lg:px-20">
+      <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-start">
+        <div className="flex flex-col gap-1 whitespace-nowrap">
+          <p className="font-serif text-3xl leading-none">CENIZA</p>
+          <p className="text-[11px] font-semibold uppercase text-oro">Alta Cocina de Origen</p>
+        </div>
+        <p className="max-w-[440px] text-sm leading-[1.3] opacity-70">
+          Un homenaje a los fuegos primigenios y la herencia gastronómica. Platos esculpidos por el humo, la tierra y la
+          paciencia.
+        </p>
+      </div>
+      <div className="flex flex-col justify-between gap-2 border-t border-linea/10 pt-6 text-xs sm:flex-row">
+        <p className="opacity-40">© 2026 Ceniza Alta Cocina. Reservados todos los derechos.</p>
+        <p className="opacity-40">Diseño Editorial y Gastronómico</p>
+      </div>
+    </footer>
+  )
+}
+
+export default function Footer({ compacto = false }) {
+  if (compacto) return <FooterCompacto />
   return (
     <footer className="flex flex-col gap-16 bg-carbon px-5 pt-16 pb-10 text-crema md:px-10 lg:px-20 lg:pt-[100px] lg:pb-[60px]">
       <div className="flex flex-col justify-between gap-12 lg:flex-row">
