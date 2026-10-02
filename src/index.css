@@ -1,0 +1,22 @@
+@import '@fontsource/instrument-serif/400.css';
+@import '@fontsource-variable/geist';
+@import 'tailwindcss';
+
+/* Tokens extraídos del prototipo de Figma (IHM ACTUALIZADO) */
+@theme {
+  --font-serif: 'Instrument Serif', Georgia, serif;
+  --font-sans: 'Geist Variable', system-ui, sans-serif;
+
+  --color-crema: #faf8f5;   /* fondo general */
+  --color-carbon: #151515;  /* texto principal, footer, botón oscuro */
+  --color-grafito: #4a4a4a; /* texto secundario */
+  --color-oro: #c5a059;     /* acento: sobretítulos, botón principal */
+  --color-linea: #ebe6de;   /* bordes y divisores */
+  --color-icono: #1d1b20;   /* íconos Material (M3 on-surface) */
+}
+
+@layer base {
+  body {
+    @apply bg-crema font-sans text-carbon antialiased;
+  }
+}
