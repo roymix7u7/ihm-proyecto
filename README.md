@@ -75,6 +75,38 @@ Para poder subir cambios, Roy tiene que agregarte primero como colaborador del r
 
 ---
 
+## ¿Dónde está cada cosa?
+
+El código está ordenado por lo que hace el usuario, no por tipo de archivo:
+
+```
+src/
+├── main.jsx          Arranque de la app
+├── App.jsx           Todas las rutas (qué pantalla va en cada URL)
+├── index.css         Colores y tipografías del Figma
+│
+├── modulos/          Una carpeta por cada flujo del usuario
+│   ├── informacion/    Inicio, Ambientes, Detalle de ambiente y Menú
+│   ├── cuenta/         Login, Registro, Perfil y la sesión del usuario
+│   ├── reserva/        El proceso de reserva en 7 pasos
+│   │   ├── pasos/        Una pantalla por paso (Personas → … → Confirmación)
+│   │   └── componentes/  Calendario, horarios, stepper, temporizador…
+│   └── mi-reserva/     Ver, reprogramar y cancelar una reserva
+│
+├── datos/            El "backend" simulado (se guarda en el navegador)
+│   ├── usuarios.js · disponibilidad.js · pagos.js · reservas.js
+│   └── catalogos/      Ambientes, platos, horarios y precios
+│
+├── compartido/       Piezas que usan varias pantallas
+│   ├── layout/         Navbar, Footer y página 404
+│   ├── ui/             Botones, modales, breadcrumb…
+│   └── formularios/    Campos y reglas de validación
+│
+└── assets/           Imágenes e íconos exportados de Figma
+```
+
+---
+
 ## ¿Algo no funciona?
 
 - **"npm no se reconoce como comando"** → Falta instalar Node.js, o necesitas cerrar y volver a abrir la terminal después de instalarlo.
